@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using UnityEngine;
 using TMPro;
@@ -9,6 +8,7 @@ public class ButtonController : MonoBehaviour
     [SerializeField] private TextMeshProUGUI timerText;
     [SerializeField] private TextMeshProUGUI clickText;
     [SerializeField] private TextMeshProUGUI highscoreText;
+    [SerializeField] private InterstitialController interstitialController;
     private int clicks;
     private Coroutine currentTimerCoroutine;
 
@@ -44,14 +44,30 @@ public class ButtonController : MonoBehaviour
 
         timerText.text = "Tiempo: 0 segundos";
         clickText.text = "0 Clicks";
+        duration = 10;
         
         if (clicks > PlayerPrefs.GetInt("clicks"))
         {
             highscoreText.text = $"Highscore: {clicks}";
             PlayerPrefs.SetInt("clicks", clicks);
+            PlayerPrefs.Save();
+        }
+        else
+        {
+            interstitialController.ShowAd();
         }
 
         clicks = 0;
+        duration = 10;
         currentTimerCoroutine = null;
+    }
+
+    public void PowerUp()
+    {
+        if (currentTimerCoroutine != null)
+            return;
+
+        duration = 12;
+        timerText.text = $"Tiempo: {duration} segundos";
     }
 }
