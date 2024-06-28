@@ -9,7 +9,7 @@ public class BannerController : MonoBehaviour
     private void Start()
     {
 #if UNITY_ANDROID
-        _adsUnitId = _androidAdsUnitId;
+        _adUnitId = _androidAdUnitId;
 #elif UNITY_EDITOR
         _adUnitId = _androidAdUnitId;
 #endif
